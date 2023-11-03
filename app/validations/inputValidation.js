@@ -7,6 +7,8 @@ const validate = (schema) => (req, res, next) => {
     });
   }
   req.xop = value;
+  // console.log("value", value);
+  // console.log("xop", req.xop);
   next();
 };
 

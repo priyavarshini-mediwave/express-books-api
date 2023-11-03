@@ -1,7 +1,7 @@
 function isValidISBN(isbn) {
   // length must be 10
-  let isbnStr = isbn.toString();
-  let n = isbnStr.length;
+
+  let n = isbn.length;
 
   if (n != 10) return false;
   console.log("here");
@@ -9,7 +9,7 @@ function isValidISBN(isbn) {
   // first 9 digits
   let sum = 0;
   for (let i = 0; i < 9; i++) {
-    let digit = isbnStr[i] - "0";
+    let digit = isbn[i] - "0";
 
     if (0 > digit || 9 < digit) return false;
 
@@ -17,7 +17,7 @@ function isValidISBN(isbn) {
   }
 
   // Checking last digit.
-  let last = isbnStr[9];
+  let last = isbn[9];
   if (last != "X" && (last < "0" || last > "9")) return false;
 
   // If last digit is 'X', add 10

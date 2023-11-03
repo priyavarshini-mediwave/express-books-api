@@ -3,9 +3,10 @@ dotenv.config();
 const config = require("./config");
 const express = require("express");
 const morgan = require("morgan");
-const { bookSchema } = require("./bookSchema");
-const { validate } = require("./inputValidation");
-const { getAllBooks, addBook } = require("./db");
+const { bookSchema } = require("./validations/bookSchema");
+const { Edittitle } = require("./validations/EditBookSchema");
+const { validate } = require("./validations/inputValidation");
+const { getAllBooks, addBook, updateBook, deleteBook } = require("./db");
 
 const app = express();
 app.use(express.json());
@@ -32,6 +33,35 @@ app.get("/books", (req, res) => {
 app.post("/books", validate(bookSchema), (req, res) => {
   const book = addBook(req.xop);
   res.send(book);
+});
+
+app.put("/books/:id", (req, res, next) => {
+  let EditBook = {};
+  if (req.body.title) {
+    EditBook = updateBook({
+      id: req.params.id,
+      title: req.body.title,
+    });
+  }
+
+  if (!EditBook) {
+    return next({
+      code: 400,
+      message: "Failed to update movie with id " + req.params.id,
+    });
+  }
+  res.send(EditBook);
+});
+
+app.delete("/books/:id", (req, res, next) => {
+  const deletedBook = deleteBook(req.params.id);
+  if (!deleteBook) {
+    return next({
+      code: 400,
+      message: "Failed to update movie with id " + req.params.id,
+    });
+  }
+  res.send(deletedBook);
 });
 
 app.listen(config.appPort, () => {
