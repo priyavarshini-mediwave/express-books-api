@@ -4,7 +4,7 @@ const config = require("./config");
 const express = require("express");
 const morgan = require("morgan");
 const { bookSchema } = require("./validations/bookSchema");
-const { Edittitle } = require("./validations/EditBookSchema");
+const { ratingSchema } = require("./validations/ratingSchema");
 const { validate } = require("./validations/inputValidation");
 const { getAllBooks, addBook, updateBook, deleteBook } = require("./db");
 
@@ -69,6 +69,9 @@ app.delete("/books/:id", (req, res, next) => {
   }
   res.send(deletedBook);
 });
+
+// post rating
+app.post("/books/:id/rating", validate(ratingSchema), (req, res, next) => {});
 
 app.use(errorHandler);
 app.listen(config.appPort, () => {
