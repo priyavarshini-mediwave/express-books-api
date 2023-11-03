@@ -12,6 +12,12 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
+const errorHandler = (err, req, res, next) => {
+  res.status(err.status || 500).json({
+    message: err.message || [" 500 : An unknown Error occured "],
+  });
+};
+
 app.get("/books", (req, res) => {
   res.json(getAllBooks());
 });
@@ -64,6 +70,7 @@ app.delete("/books/:id", (req, res, next) => {
   res.send(deletedBook);
 });
 
+app.use(errorHandler);
 app.listen(config.appPort, () => {
   console.log(`Server running at port ${config.appPort}`);
 });
