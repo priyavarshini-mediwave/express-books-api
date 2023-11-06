@@ -48,10 +48,41 @@ const addRating = (ratingValue, bookId) => {
   return rating;
 };
 
+const getBookwithRating = (bookId) => {
+  let bookwithId = books.find((b) => b.id == bookId);
+  console.log("bookwithId", bookwithId);
+  if (!bookwithId) {
+    return null;
+  }
+  const ratingtoFind = ratings.find((r) => r.bookId == bookId);
+  console.log("ratingtoFind", ratingtoFind);
+
+  const ratingForBook = ratingtoFind ? ratingtoFind.ratingValue : 0;
+
+  const bookToreturn = {
+    id: bookId,
+    title: bookwithId.title,
+    isbn: bookwithId.isbn,
+    rating: ratingForBook,
+  };
+  return bookToreturn;
+};
+
+const EditBookRating = (newRatingValue, bookId) => {
+  const editRatingIndex = ratings.findIndex((r) => r.bookId == bookId);
+  if (editRatingIndex !== -1) {
+    ratings[editRatingIndex].ratingValue = newRatingValue;
+    return ratings[editRatingIndex];
+  }
+  return null;
+};
+
 module.exports = {
   getAllBooks,
   addBook,
   updateBook,
   deleteBook,
   addRating,
+  getBookwithRating,
+  EditBookRating,
 };

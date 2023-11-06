@@ -12,6 +12,8 @@ const {
   updateBook,
   deleteBook,
   addRating,
+  getBookwithRating,
+  EditBookRating,
 } = require("./db");
 
 const app = express();
@@ -90,7 +92,21 @@ app.post("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
 });
 
 //get book by id with rating
-app.get("/books/:id", (req, res) => {});
+app.get("/books/:id", (req, res) => {
+  const bookWithRating = getBookwithRating(req.params.id);
+  res.send(bookWithRating);
+});
+
+app.put("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
+  let ratingEditedBook = EditBookRating(req.xop.ratingValue, req.params.id);
+  if (!ratingEditedBook) {
+    return next({
+      code: 400,
+      message: "Failed to update book with id " + req.params.id,
+    });
+  }
+  res.send(ratingEditedBook);
+});
 
 app.use(errorHandler);
 app.listen(config.appPort, () => {
