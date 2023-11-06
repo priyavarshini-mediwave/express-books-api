@@ -4,7 +4,7 @@ function isValidISBN(isbn) {
   let n = isbn.length;
 
   if (n != 10) return false;
-  console.log("here");
+  //console.log("here");
   // Computing weighted sum of
   // first 9 digits
   let sum = 0;

@@ -6,7 +6,13 @@ const morgan = require("morgan");
 const { bookSchema } = require("./validations/bookSchema");
 const { ratingSchema } = require("./validations/ratingSchema");
 const { validate } = require("./validations/inputValidation");
-const { getAllBooks, addBook, updateBook, deleteBook } = require("./db");
+const {
+  getAllBooks,
+  addBook,
+  updateBook,
+  deleteBook,
+  addRating,
+} = require("./db");
 
 const app = express();
 app.use(express.json());
@@ -53,7 +59,7 @@ app.put("/books/:id", (req, res, next) => {
   if (!EditBook) {
     return next({
       code: 400,
-      message: "Failed to update movie with id " + req.params.id,
+      message: "Failed to update book with id " + req.params.id,
     });
   }
   res.send(EditBook);
@@ -64,14 +70,27 @@ app.delete("/books/:id", (req, res, next) => {
   if (!deleteBook) {
     return next({
       code: 400,
-      message: "Failed to update movie with id " + req.params.id,
+      message: "Failed to update book with id " + req.params.id,
     });
   }
   res.send(deletedBook);
 });
 
 // post rating
-app.post("/books/:id/rating", validate(ratingSchema), (req, res, next) => {});
+app.post("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
+  console.log(req.xop.ratingValue);
+  const rating = addRating(req.xop.ratingValue, req.params.id);
+  res.send(rating);
+  if (!rating) {
+    return next({
+      code: 400,
+      message: "Failed to add rating to the book with id " + req.params.id,
+    });
+  }
+});
+
+//get book by id with rating
+app.get("/books/:id", (req, res) => {});
 
 app.use(errorHandler);
 app.listen(config.appPort, () => {

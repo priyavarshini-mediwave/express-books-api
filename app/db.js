@@ -1,5 +1,8 @@
 const { isValidISBN } = require("./validations/ISBN validation");
+const { v4: uuidv4 } = require("uuid");
+
 const books = [];
+const ratings = [];
 
 const getAllBooks = () => books;
 
@@ -33,9 +36,22 @@ const deleteBook = (id) => {
     return deletedBook;
   }
 };
+
+const addRating = (ratingValue, bookId) => {
+  let ratingId = uuidv4();
+  const rating = {
+    ratingId: ratingId,
+    ratingValue: ratingValue,
+    bookId: bookId,
+  };
+  ratings.push(rating);
+  return rating;
+};
+
 module.exports = {
   getAllBooks,
   addBook,
   updateBook,
   deleteBook,
+  addRating,
 };
