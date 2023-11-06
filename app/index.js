@@ -14,6 +14,8 @@ const {
   addRating,
   getBookwithRating,
   EditBookRating,
+  getBookbyRatingId,
+  deleteRating,
 } = require("./db");
 
 const app = express();
@@ -102,12 +104,34 @@ app.put("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
   if (!ratingEditedBook) {
     return next({
       code: 400,
-      message: "Failed to update book with id " + req.params.id,
+      message: "Failed to update rating for book with id " + req.params.id,
     });
   }
   res.send(ratingEditedBook);
 });
 
+app.get("/rating/:ratingId", (req, res, next) => {
+  const bookbyRatingId = getBookbyRatingId(req.params.ratingId);
+  if (!bookbyRatingId) {
+    return next({
+      code: 400,
+      message:
+        "Failed to get book for rating with Ratingid " + req.params.ratingId,
+    });
+  }
+  res.send(bookbyRatingId);
+});
+
+app.delete("/rating/:ratingId", (req, res, next) => {
+  const deletedRating = deleteRating(req.params.ratingId);
+  if (!deletedRating) {
+    return next({
+      code: 400,
+      message: "Failed to delete rating with id " + req.params.ratingId,
+    });
+  }
+  res.send(deletedRating);
+});
 app.use(errorHandler);
 app.listen(config.appPort, () => {
   console.log(`Server running at port ${config.appPort}`);

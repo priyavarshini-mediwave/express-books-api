@@ -77,6 +77,34 @@ const EditBookRating = (newRatingValue, bookId) => {
   return null;
 };
 
+const getBookbyRatingId = (ratingId) => {
+  let ratingwithID = ratings.find((r) => r.ratingId == ratingId);
+  console.log("ratingwithID", ratingwithID);
+  if (!ratingwithID) {
+    return null;
+  }
+  const bookToFind = books.find((b) => b.id == ratingwithID.bookId);
+  console.log("bookToFind", bookToFind);
+
+  const booktoReturnByRating = {
+    id: ratingwithID.ratingId,
+    rating: ratingwithID.ratingValue,
+    book: bookToFind,
+  };
+  console.log("booktoReturnByRating", booktoReturnByRating);
+  return booktoReturnByRating;
+};
+
+const deleteRating = (id) => {
+  console.log("deleteRatingId", id);
+  const idx = ratings.findIndex((r) => r.id == id);
+  if (idx !== -1) {
+    const deletedRating = ratings[idx];
+    ratings.splice(idx, 1);
+    return deletedRating;
+  }
+};
+
 module.exports = {
   getAllBooks,
   addBook,
@@ -85,4 +113,6 @@ module.exports = {
   addRating,
   getBookwithRating,
   EditBookRating,
+  getBookbyRatingId,
+  deleteRating,
 };
