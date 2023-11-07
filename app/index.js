@@ -16,6 +16,7 @@ const {
   EditBookRating,
   getBookbyRatingId,
   deleteRating,
+  searchBooks,
 } = require("./db");
 
 const app = express();
@@ -31,8 +32,8 @@ const errorHandler = (err, req, res, next) => {
 app.get("/books", (req, res) => {
   const searchTerm = req.query.search;
   const booksGot = getAllBooks();
-  console.log("booksGot", booksGot);
-  console.log("searchTerm", searchTerm);
+  // console.log("booksGot", booksGot);
+  // console.log("searchTerm", searchTerm);
   if (searchTerm) {
     const booksToReturn = booksGot.filter((b) =>
       b.title.toLowerCase().includes(searchTerm.toLowerCase())

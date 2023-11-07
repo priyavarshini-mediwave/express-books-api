@@ -108,6 +108,15 @@ const deleteRating = (id) => {
   }
 };
 
+const searchBooks = ({ booksGot, searchTerm }) => {
+  console.log("booksGot", booksGot, "searchTerm", searchTerm);
+  const booksToReturn = booksGot.filter((b) =>
+    b.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log(booksToReturn);
+  return booksToReturn;
+};
+
 module.exports = {
   getAllBooks,
   addBook,
@@ -118,4 +127,5 @@ module.exports = {
   EditBookRating,
   getBookbyRatingId,
   deleteRating,
+  searchBooks,
 };
