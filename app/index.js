@@ -29,19 +29,28 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-app.get("/books", (req, res) => {
+app.get("/books", (req, res, next) => {
   const searchTerm = req.query.search;
-  const booksGot = getAllBooks();
-  // console.log("booksGot", booksGot);
-  // console.log("searchTerm", searchTerm);
+
   if (searchTerm) {
-    const booksToReturn = booksGot.filter((b) =>
-      b.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    console.log(booksToReturn);
-    res.json(booksToReturn);
+    const books = searchBooks(searchTerm);
+    if (!books) {
+      return next({
+        status: 400,
+        message: "Failed to search books :" + searchTerm,
+      });
+    }
+    res.json(books);
+  } else {
+    const books = getAllBooks();
+    if (!books) {
+      return next({
+        status: 400,
+        message: "Failed to get all books",
+      });
+    }
+    res.json(books);
   }
-  res.json(booksGot);
 });
 
 // app.post("/books", (req, res, next) => {

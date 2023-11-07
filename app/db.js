@@ -108,12 +108,10 @@ const deleteRating = (id) => {
   }
 };
 
-const searchBooks = ({ booksGot, searchTerm }) => {
-  console.log("booksGot", booksGot, "searchTerm", searchTerm);
-  const booksToReturn = booksGot.filter((b) =>
+const searchBooks = (searchTerm) => {
+  const booksToReturn = books.filter((b) =>
     b.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log(booksToReturn);
   return booksToReturn;
 };
 

@@ -102,13 +102,13 @@
 			]
 		},
 		{
-			"name": "add one movie",
+			"name": "add one book",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\":\"Ramayan\",\n    \"isbn\":\"007462542X\"\n    \n}",
+					"raw": "{\n    \"title\":\"the rise of damyaan\",\n    \"isbn\":\"007462542X\"\n    \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -136,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\":\"MahaBharata\"\n}",
+					"raw": "{\n    \"title\":\"Charles\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -144,7 +144,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/books/1699332573131",
+					"raw": "http://localhost:4567/books/1699335113456",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -152,7 +152,7 @@
 					"port": "4567",
 					"path": [
 						"books",
-						"1699332573131"
+						"1699335113456"
 					]
 				}
 			},
@@ -228,7 +228,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4567/books/1699332762665",
+					"raw": "http://localhost:4567/books/1699337160763",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -236,7 +236,7 @@
 					"port": "4567",
 					"path": [
 						"books",
-						"1699332762665"
+						"1699337160763"
 					]
 				}
 			},
@@ -249,7 +249,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"ratingValue\":5\r\n}",
+					"raw": "{\r\n    \"ratingValue\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -257,7 +257,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/books/1699273935816/rating",
+					"raw": "http://localhost:4567/books/1699335113456/rating",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -265,7 +265,7 @@
 					"port": "4567",
 					"path": [
 						"books",
-						"1699273935816",
+						"1699335113456",
 						"rating"
 					]
 				}
@@ -363,7 +363,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4567/rating/4bb5dde5-d236-404a-9306-504e2a7f8996",
+					"raw": "http://localhost:4567/rating/21206233-80c1-4130-8095-60f2f107ecbc",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -371,7 +371,7 @@
 					"port": "4567",
 					"path": [
 						"rating",
-						"4bb5dde5-d236-404a-9306-504e2a7f8996"
+						"21206233-80c1-4130-8095-60f2f107ecbc"
 					]
 				}
 			},
@@ -413,7 +413,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4567/books/1699332573131",
+					"raw": "http://localhost:4567/books/1699335113456",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -421,7 +421,32 @@
 					"port": "4567",
 					"path": [
 						"books",
-						"1699332573131"
+						"1699335113456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4567/books?search=dam",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "dam"
+						}
 					]
 				}
 			},
