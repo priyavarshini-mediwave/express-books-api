@@ -29,7 +29,18 @@ const errorHandler = (err, req, res, next) => {
 };
 
 app.get("/books", (req, res) => {
-  res.json(getAllBooks());
+  const searchTerm = req.query.search;
+  const booksGot = getAllBooks();
+  console.log("booksGot", booksGot);
+  console.log("searchTerm", searchTerm);
+  if (searchTerm) {
+    const booksToReturn = booksGot.filter((b) =>
+      b.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    console.log(booksToReturn);
+    res.json(booksToReturn);
+  }
+  res.json(booksGot);
 });
 
 // app.post("/books", (req, res, next) => {
