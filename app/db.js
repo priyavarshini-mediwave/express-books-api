@@ -14,6 +14,7 @@ const addBook = ({ title, isbn }) => {
     return book;
   } else {
     console.log("error");
+    return null;
   }
 };
 
@@ -34,6 +35,8 @@ const deleteBook = (id) => {
     const deletedBook = books[idx];
     books.splice(idx, 1);
     return deletedBook;
+  } else {
+    return null;
   }
 };
 

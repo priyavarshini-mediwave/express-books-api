@@ -46,8 +46,14 @@ app.get("/books", (req, res) => {
 //     message: "Books payload should have title and isbn",
 //   });
 // });
-app.post("/books", validate(bookSchema), (req, res) => {
+app.post("/books", validate(bookSchema), (req, res, next) => {
   const book = addBook(req.xop);
+  if (!book) {
+    return next({
+      status: 400,
+      message: "Failed to add book with title  " + req.xop.title,
+    });
+  }
   res.send(book);
 });
 
@@ -62,7 +68,7 @@ app.put("/books/:id", (req, res, next) => {
 
   if (!EditBook) {
     return next({
-      code: 400,
+      status: 400,
       message: "Failed to update book with id " + req.params.id,
     });
   }
@@ -71,10 +77,11 @@ app.put("/books/:id", (req, res, next) => {
 
 app.delete("/books/:id", (req, res, next) => {
   const deletedBook = deleteBook(req.params.id);
-  if (!deleteBook) {
+  console.log(deletedBook);
+  if (!deletedBook) {
     return next({
-      code: 400,
-      message: "Failed to update book with id " + req.params.id,
+      status: 400,
+      message: "Failed to delete book with id " + req.params.id,
     });
   }
   res.send(deletedBook);
@@ -87,7 +94,7 @@ app.post("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
   res.send(rating);
   if (!rating) {
     return next({
-      code: 400,
+      status: 400,
       message: "Failed to add rating to the book with id " + req.params.id,
     });
   }
@@ -103,7 +110,7 @@ app.put("/books/:id/rating", validate(ratingSchema), (req, res, next) => {
   let ratingEditedBook = EditBookRating(req.xop.ratingValue, req.params.id);
   if (!ratingEditedBook) {
     return next({
-      code: 400,
+      status: 400,
       message: "Failed to update rating for book with id " + req.params.id,
     });
   }
@@ -114,7 +121,7 @@ app.get("/rating/:ratingId", (req, res, next) => {
   const bookbyRatingId = getBookbyRatingId(req.params.ratingId);
   if (!bookbyRatingId) {
     return next({
-      code: 400,
+      status: 400,
       message:
         "Failed to get book for rating with Ratingid " + req.params.ratingId,
     });
@@ -126,7 +133,7 @@ app.delete("/rating/:ratingId", (req, res, next) => {
   const deletedRating = deleteRating(req.params.ratingId);
   if (!deletedRating) {
     return next({
-      code: 400,
+      status: 400,
       message: "Failed to delete rating with id " + req.params.ratingId,
     });
   }
