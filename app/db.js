@@ -97,7 +97,7 @@ const getBookbyRatingId = (ratingId) => {
 
 const deleteRating = (id) => {
   console.log("deleteRatingId", id);
-  const idx = ratings.findIndex((r) => r.id == id);
+  const idx = ratings.findIndex((r) => r.ratingId == id);
   if (idx !== -1) {
     const deletedRating = ratings[idx];
     ratings.splice(idx, 1);
